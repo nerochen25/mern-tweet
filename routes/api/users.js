@@ -83,12 +83,15 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
         if (isMatch) {
           const payload = { id: user.id, email: user.email };
   
-          jwt.sign(payload, keys.secretOrKeys, { expiresIn: 3600 }, (err, token) => {
+          
+          jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
             res.json({
               success: true,
               token: "Bearer " + token
             });
           });
+          
+
         } else {
           errors.password = "Incorrect password";
           return res.status(400).json(errors);
